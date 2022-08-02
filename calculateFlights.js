@@ -1,3 +1,4 @@
+//Return the list of destination that are affordable, with Connections (intermediate stops)
 const flights = [
   ['LHR', 'BCN', '80.90'],
   ['EDI', 'LHR', '123.45'],
@@ -19,8 +20,8 @@ const getFlightsForBudget = (flights, origin, budget) => {
   );
 
   const destinations = filteredArray.map((flight) => {
-    const flightFare = { destination: flight[1], fare: flight[2] };
-    return flightFare;
+    const destinationObject = { destination: flight[1], fare: flight[2] };
+    return destinationObject;
   });
 
   //use ...new Set to remove duplicates from the list.
@@ -36,18 +37,30 @@ const isWithibBudget = (origin, budget, flight) => {
   return false;
 };
 
-//
+//Entry point
 const solution = (flights, origin, budget) => {
-  const flightsWithinBudget = intermediateStops(flights, origin, budget);
-  const destinations = flightsWithinBudget.map((flight) => {
-    return flight.destination;
-  });
+  const flightsWithinBudgetWithIntermediateStops = intermediateStops(
+    flights,
+    origin,
+    budget
+  );
+  //console.log(flightsWithinBudgetWithIntermediateStops);
+
+  const destinations = flightsWithinBudgetWithIntermediateStops.map(
+    (flight) => {
+      return flight.destination;
+    }
+  );
   return [...new Set(destinations)];
 };
 
+//intermediateStops is a function called recursively for each flight within budget
 const intermediateStops = (flights, origin, budget) => {
+  //flightsWithinBudget is an array of objects with the destination and the fare for each origin
   const flightsWithinBudget = getFlightsForBudget(flights, origin, budget);
+  //console.log(origin, flightsWithinBudget);
 
+  //If there's no flight within budget for a given origin, then intermediaStops returns []
   if (flightsWithinBudget.length === 0) {
     return [];
   }
@@ -56,14 +69,17 @@ const intermediateStops = (flights, origin, budget) => {
   flightsWithinBudget.forEach((flight) => {
     const newFlight = intermediateStops(
       flights,
+      //For each call, the origin will be replaced by the destination
       flight.destination,
+      //the budget will be decreased by the fare because we need to include the whole trip
       budget - flight.fare
     );
     returnedFlights = [...flightsWithinBudget, ...newFlight];
   });
 
-  return returnedFlights.filter((flight) => flight.destination != 'EDI');
+  return returnedFlights.filter((flight) => flight.destination != origin);
 };
+//solution(flights, 'EDI', 500);
 
 console.log(solution(flights, 'EDI', 500));
 
