@@ -7,7 +7,6 @@ const pathRunningValueArray = (arr) => {
   let runningTotalArray = [];
   arr.forEach((element) => {
     runningTotalArray.push((runningTotal += element));
-    //console.log('element: ', element, 'runningT: ', runningTotal);
   });
   return runningTotalArray;
 };
@@ -36,16 +35,3 @@ function countingValleys(path) {
 
 console.log(countingValleys(string1));
 console.log(countingValleys(string2));
-
-//A valley is a sequence of consecutive steps below sea level, starting with a step down from sea level and ending with a step up to sea level.
-// Valley --> when the running score is over 0 and then becomes <0 until it becomes > 0.
-
-// pathRunningValue = arrayOfValues.map((value, i) => {
-//   if (i === 0) {
-//     return value;
-//   } else {
-//     console.log(i, value, arrayOfValues[i - 1], value + arrayOfValues[i - 1]);
-//     //return value + arrayOfValues[i - 1];
-//   }
-// });
-//console.log(pathRunningValue);
