@@ -25,10 +25,19 @@ const pathRunningValueArray = (arr) => {
   });
   return runningTotalArray;
 };
-console.log(pathRunningValueArray(arrayOfValues));
+//console.log(pathRunningValueArray(arrayOfValues));
 
 //TODO:Given an array of values, account for the number of times the running value is <0 right before it's 0 again.
-
+const valleyCounter = (array) => {
+  let counter = 0;
+  array.forEach((element, i) => {
+    if (element === 0 && array[i - 1] < 0) {
+      counter += 1;
+    }
+  });
+  return counter;
+};
+console.log(valleyCounter(pathRunningValueArray(arrayOfValues)));
 // pathRunningValue = arrayOfValues.map((value, i) => {
 //   if (i === 0) {
 //     return value;
