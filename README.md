@@ -8,7 +8,7 @@ A valley is a sequence of consecutive steps below sea level, starting with a ste
 Given the sequence of up and down steps during a hike, find and print the number of valleys walked through.
 
 Example
-
+c= [0,1,0,0,0,1,0]
 The hiker first enters a valley units deep. Then they climb out and up onto a mountain units high. Finally, the hiker returns to sea level and ends the hike.
 
 Function Description
