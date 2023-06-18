@@ -24,40 +24,39 @@ How are we going to append each character? using concat()
 
 function repeatedString(s, n) {
   const stringLower = s.toLowerCase();
-  let aCount = 0;
-  let repeatedString = '';
+  const stringLength = stringLower.length;
+  const occurrencesInString = countLetterA(stringLower);
 
-  if (stringLower === 'a') {
-    aCount = n;
-  } else {
-    do {
-      for (let char of stringLower) {
-        if (repeatedString.length === n) {
-          break;
-        } else {
-          repeatedString = repeatedString.concat(char);
-        }
-      }
-    } while (repeatedString.length < n);
-    aCount = countLetterA(repeatedString);
-  }
+  const repetitions = Math.floor(n / stringLength);
+  const remainder = n % stringLength;
+  const partialString = stringLower.slice(0, remainder);
+
+  const aCount =
+    occurrencesInString * repetitions + countLetterA(partialString);
+
   return aCount;
 }
 
-const countLetterA = (string) => {
+function countLetterA(string) {
   let count = 0;
-  for (char of string) {
-    if (char === 'a') {
+  for (let i = 0; i < string.length; i++) {
+    if (string[i] === 'a') {
       count++;
     }
   }
   return count;
-};
+}
 
-console.log(
-  repeatedString(
-    'kmretasscityylpdhuwjirnqimlkcgxubxmsxpypgzxtenweirknjtasxtvxemtwxuarabssvqdnktqadhyktagjxoanknhgilnm',
-    736778906400
-  )
-);
+console.log(repeatedString('ba', 4));
 // console.log('bababababa'.length);
+
+/*
+Calculate the length of the original string s (stringLength).
+Calculate the number of occurrences of 'a' in the original string (occurrencesInString) using the countLetterA function.
+Calculate the number of full repetitions of the string within n (repetitions) by dividing n by stringLength using Math.floor.
+Calculate the remaining characters after the full repetitions (remainder) by taking the modulus (%) of n with stringLength.
+Create a partial string (partialString) by slicing the original string from index 0 to the value of remainder.
+Calculate the total number of 'a' occurrences (aCount) by multiplying occurrencesInString with repetitions and adding the count of 'a' occurrences in the partialString using the countLetterA function.
+Return the final count of 'a' occurrences (aCount).
+With this optimization, the function can handle larger values of n more efficiently while still returning the correct result.
+*/
